@@ -6,36 +6,39 @@ description: |-
   Get information on an OpenTelekomCloud VPC Route.
 ---
 
-# opentelekomcloud_vpc_peering_connection
+# opentelekomcloud_vpc_route_v1
 
 This interface is used to query details about a route.
 
 ## Example Usage
 
-```hcl
-resource "opentelekomcloud_route" "r" {
-  route_table_id            = "rtb-4fbb3ac4"
-  destination_cidr_block    = "10.0.1.0/22"
-  vpc_peering_connection_id = "pcx-45ff3dc1"
-  depends_on                = ["opentelekomcloud_route_table.testing"]
+ ```hcl
+data "opentelekomcloud_vpc_route_v2" "vpc_route" {
+  id = "${var.route_id}"
 }
-```
+
+output "vpc_data" {
+  value = "${data.opentelekomcloud_vpc_route_v2.vpc_route.destination}"
+}
+ ```
 
 ## Argument Reference
 
 The following arguments are supported:
 
-- route_id - (Required) The route_id whose details need to be query.
+- id - (Required) The id whose details need to be query.
 
 ## Attribute Reference
 
-- id - Specifies that the route ID.
+- id - The route ID.
  
-- tenant_id - Specifies the tenant ID. Only the administrator can specify the tenant ID of other tenants.
+- tenant_id - The tenant ID. Only the administrator can specify the tenant ID of other tenants.
 
-- vpc_id - Specifies the VPC for which a route is to be added.
+- vpc_id - The VPC for which a route is to be added.
 
-- destination - Specifies the destination IP address or CIDR block.
+- destination - The destination IP address or CIDR block.
 
-- type - Specifies the route type.
+- nexthop - The next hop. If the route type is peering.
+
+- type - The route type.
 

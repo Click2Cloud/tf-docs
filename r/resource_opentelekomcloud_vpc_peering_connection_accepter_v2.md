@@ -6,80 +6,71 @@ description: |-
   Get information on an OpenTelekomCloud VPC Peering Connection Accepter.
 ---
 
-# opentelekomcloud_vpc_peering_connection_accepter
+# opentelekomcloud_vpc_peering_connection_accepter_v2
 
 Provides a resource to manage the accepter's side of a VPC Peering Connection.
 
-When a cross-account (requester's AWS account differs from the accepter's AWS account) or an inter-region VPC Peering Connection is created, a VPC Peering Connection resource is automatically created in the accepter's account. The requester can use the aws_vpc_peering_connection resource to manage its side of the connection and the accepter can use the aws_vpc_peering_connection_accepter resource to "adopt" its side of the connection into management.
-
 ## Example Usage
 
-```hcl
-provider "opentelekomcloud" {
-  region = "us-east-1"
-
-  # Requester's credentials.
+ ```hcl
+ provider "opentelekomcloud"  {
+  alias = "main"
+  user_name   = "${var.username}"
+  domain_name = "${var.domain_name}"
+  password    = "${var.password}"
+  auth_url    = "${var.auth_url}"
+  region      = "${var.region}"
+  tenant_id   = "${var.tenant_id}"
 }
 
-provider "opentelekomcloud" {
+provider "opentelekomcloud"  {
   alias = "peer"
-  region = "us-west-2"
-
-  # Accepter's credentials.
+  user_name = "${var.peer_username}"
+  domain_name = "${var.peer_domain_name}"
+  password    = "${var.peer_password}"
+  auth_url    = "${var.peer_auth_url}"
+  region      = "${var.peer_region}"
+  tenant_id   = "${var.peer_tenant_id}"
 }
 
-resource "opentelekomcloud_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+resource "opentelekomcloud_vpc_v1" "vpc_main" {
+  provider = "opentelekomcloud.main"
+  name = "${var.vpc_name}"
+  cidr = "${var.vpc_cidr}"
 }
 
-resource "opentelekomcloud_vpc" "peer" {
-  provider   = "otc.peer"
-  cidr_block = "10.1.0.0/16"
-}
-
-data "opentelekomcloud_caller_identity" "peer" {
+resource "opentelekomcloud_vpc_v1" "vpc_peer" {
   provider = "opentelekomcloud.peer"
+  name = "${var.peer_vpc_name}"
+  cidr = "${var.peer_vpc_cidr}"
 }
 
-# Requester's side of the connection.
-
-resource "opentelekomcloud_vpc_peering_connection" "peer" {
-  vpc_id        = "${opentelekomcloud_vpc.main.id}"
-  peer_vpc_id   = "${opentelekomcloud_vpc.peer.id}"
-  peer_owner_id = "${data.opentelekomcloud_caller_identity.peer.account_id}"
-  peer_region   = "us-west-2"
-  auto_accept   = false
-
-  tags {
-    Side = "Requester"
-  }
+resource "opentelekomcloud_vpc_peering_connection_v2" "peering" {
+  provider = "opentelekomcloud.main"
+  name = "${var.peer_name}"
+  vpc_id = "${opentelekomcloud_vpc_v1.vpc_main.id}"
+  peer_vpc_id = "${opentelekomcloud_vpc_v1.vpc_peer.id}"
+  peer_tenant_id =  "${var.tenant_id}"
 }
-
-# Accepter's side of the connection.
-
-resource "opentelekomcloud_vpc_peering_connection_accepter" "peer" {
-  provider                  = "opentelekomcloud.peer"
-  vpc_peering_connection_id = "${opentelekomcloud_vpc_peering_connection.peer.id}"
-  auto_accept               = true
-
-  tags {
-    Side = "Accepter"
-  }
+resource "opentelekomcloud_vpc_peering_connection_accepter_v2" "peer" {
+    provider = "opentelekomcloud.peer"
+    id = "${opentelekomcloud_vpc_peering_connection_v2."peering".id}"
+  
 }
-```
+ ```
 
 ## Argument Reference
 
 The following arguments are supported:
 
-- vpc_peering_connection_id - (Required) The VPC Peering Connection ID to manage.
+- id - (Required) The VPC Peering Connection ID to manage.
 
 
-## Removing aws_vpc_peering_connection_accepter from your configuration
+## Removing opentelekomcloud_vpc_peering_connection_accepter from your configuration
  
 OpenTelekomCloud allows a cross-account VPC Peering Connection to be deleted from either the requester's or accepter's side. However, Terraform only allows the VPC Peering Connection to be deleted from the requester's side by removing the corresponding opentelekomcloud_vpc_peering_connection resource from your configuration. Removing a opentelekomcloud_vpc_peering_connection_accepter resource from your configuration will remove it from your statefile and management, but will not destroy the VPC Peering Connection.
 
-## **Attributes Reference**
+## Attributes Reference
 
 All of the argument attributes except auto_accept are also exported as result attributes.
 

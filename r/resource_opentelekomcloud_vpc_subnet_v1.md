@@ -6,34 +6,26 @@ description: |-
   Get information on an OpenTelekomCloud VPC Subnet.
 ---
 
-# opentelekomcloud_vpc_v1
+# opentelekomcloud_vpc_subnet_v1
 
 Provides VPC subnet resource.
 
 # Example Usage
 
-```hcl
-
+ ```hcl
 resource "opentelekomcloud_vpc_v1" "vpc_v1" {
   name = "${var.vpc_name}"
-  cidr = "192.168.0.0/16"
+  cidr = "${var.vpc_cidr}"
 }
 
 
-resource "opentelekomcloud_subnet_v1" "subnet_1" {
+resource "opentelekomcloud_subnet_v1" "subnet_v1" {
   name = "${var.subnet_name}"
   cidr = "${var.subnet_cidr}"
-  dhcp_enable= "true",
-  primary_dns= "${var.subnet_primary_dns}",
-  secondary_dns= "${var.subnet_secondary_dns}",
-  dnslist= ["114.114.114.114",
-            "114.114.115.115"],
   gateway_ip = "${var.subnet_gateway_ip}"
   vpc_id = "${opentelekomcloud_vpc_v1.vpc_v1.id}"
-  availability_zone = "${var.subnet_availability_zone}"
-  
 }
-```
+ ```
 
 # Argument Reference
 
@@ -56,10 +48,6 @@ The following arguments are supported:
 - dnsList (Optional) - Specifies the DNS server address list of a subnet. This field is required if you need to use more than two DNS servers. This parameter value is the superset of both DNS server address 1 and DNS server address 2.
 
 - availability_zone (Optional) - Identifies the availability zone (AZ) to which the subnet belongs. The value must be an existing AZ in the system.
-
-- port_security_enable (Optional) - Specifies the operations can be performed on security groups during subnet creation. This is a system default parameter. Users do not need to configure this parameter.
-
-- subnet_id (Required) - Specifies the subnet ID, which uniquely identifies the subnet.
 
 
 # Attributes Reference
@@ -87,10 +75,6 @@ The following attributes are exported:
 - primary_dns - The IP address of DNS server 1 on the subnet.
  
 - secondary_dns - The IP address of DNS server 2 on the subnet.
-
-- neutron_network_id - Specifies the network (Native OpenStack API) ID.
- 
-- neutron_subnet_id - Specifies the subnet (Native OpenStack API) ID.
 
 # Import
 
