@@ -35,7 +35,7 @@ output "subnet_cidr_blocks" {
 
 The following arguments are supported:
 
-- vpc_id - (Required) Specifies the VPC ID used as the query filter.
+* `vpc_id` (Required) - Specifies the VPC ID used as the query filter.
 
 ## Attributes Reference
 

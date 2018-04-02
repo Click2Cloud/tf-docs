@@ -16,9 +16,9 @@ Provides a resource to manage a VPC Peering Connection resource.
 
  ```hcl
 resource "opentelekomcloud_vpc_peering_connection_v2" "peering" {
-  name = "${var.vpc_name}"
+  name = "${var.peer_conn_name}"
   vpc_id = "${var.vpc_id}"
-  peer_vpc_id = "${var.accpet_vpc_id}"
+  peer_vpc_id = "${var.accepter_vpc_id}"
 }
  ```
 
@@ -30,7 +30,7 @@ The following arguments are supported:
 
 * `vpc_id` (Required) - Specifies the ID of a VPC involved in a VPC peering connection.
 
-* `peer_vpc_id` (Required) - Specifies the VPC ID of the accepte tenant.
+* `peer_vpc_id` (Required) - Specifies the VPC ID of the accepter tenant.
 
 * `peer_tenant_id` (Optional) - Specified the Tenant Id of the accepter tenant.
   

@@ -42,7 +42,7 @@ subnet whose data will be exported as attributes.
 
 * `vpc_id` (Optional) - The id of the VPC that the desired subnet belongs to.
 
-* `gateway_ip` - The subnet gateway address of specific subnet.
+* `gateway_ip` (Optional) - The subnet gateway address of specific subnet.
 
 * `availability_zone` (Optional) - The availability zone (AZ) to which the subnet should belong.
 

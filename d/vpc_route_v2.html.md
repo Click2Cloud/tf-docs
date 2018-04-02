@@ -34,15 +34,15 @@ The arguments of this data source act as filters for querying the available
 routes in the current tenant. The given filters must match exactly one
 route whose data will be exported as attributes.
 
-* `id` - (Optional) The id of the specific route to retrieve.
+* `id` (Optional) - The id of the specific route to retrieve.
 
-* `vpc_id` - (Optional) The id of the VPC that the desired route belongs to.
+* `vpc_id` (Optional) - The id of the VPC that the desired route belongs to.
 
-* `destination` - (Optional) The route destination address (CIDR).
+* `destination` (Optional) - The route destination address (CIDR).
 
-* `tenant_id` - (Optional) Only the administrator can specify the tenant ID of other tenants.
+* `tenant_id` (Optional) - Only the administrator can specify the tenant ID of other tenants.
 
-* `type` - (Optional) Route type for filtering.
+* `type` (Optional) - Route type for filtering.
 
 ## Attribute Reference
 

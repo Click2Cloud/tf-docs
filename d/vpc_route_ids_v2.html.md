@@ -33,7 +33,7 @@ output "route_nexthop" {
 
 ## Argument Reference
 
-* `vpc_id` - (Required) The VPC ID that you want to filter from.
+* `vpc_id` (Required) - The VPC ID that you want to filter from.
 
 ## Attributes Reference
 

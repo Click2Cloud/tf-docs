@@ -25,15 +25,15 @@ resource "opentelekomcloud_vpc_route_v2" "vpc_route" {
 
 The following arguments are supported:
 
-* `destination` - (Required) Specifies the destination IP address or CIDR block.
+* `destination` (Required) - Specifies the destination IP address or CIDR block.
 
-* `nexthop` - (Required)  Specifies the next hop. If the route type is peering, enter the VPC peering connection ID.
+* `nexthop` (Required) - Specifies the next hop. If the route type is peering, enter the VPC peering connection ID.
 
-* `type` - (Required) Specifies the route type. Currently, the value can only be **peering**.
+* `type` (Required) - Specifies the route type. Currently, the value can only be **peering**.
 
-* `vpc_id` - (Required) Specifies the VPC for which a route is to be added.
+* `vpc_id` (Required) - Specifies the VPC for which a route is to be added.
 
-* `tenant_id` - (Optional) Specifies the tenant ID. Only the administrator can specify the tenant ID of other tenant
+* `tenant_id` (Optional) - Specifies the tenant ID. Only the administrator can specify the tenant ID of other tenant
 
 ## Attributes Reference
 
