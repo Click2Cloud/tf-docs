@@ -8,7 +8,7 @@ description: |-
 
 # Data Source: opentelekomcloud_vpc_subnet_ids_v1
 
-`opentelekomcloud_vpc_subnet_ids_v1` provides a list of ids for a vpc_id
+`opentelekomcloud_vpc_subnet_ids_v1` provides a list of subnet ids for a vpc_id
 
 This resource can be useful for getting back a list of subnet ids for a vpc.
 
