@@ -78,9 +78,9 @@ The following arguments are supported:
 * `accept` (Optional)- Whether or not to accept the peering request. Defaults to `false`.
 
 
-## Removing opentelekomcloud_vpc_peering_connection_accepter from your configuration
+## Removing opentelekomcloud_vpc_peering_connection_accepter_v2 from your configuration
  
-OpenTelekomCloud allows a cross-tenant VPC Peering Connection to be deleted from either the requester's or accepter's side. However, Terraform only allows the VPC Peering Connection to be deleted from the requester's side by removing the corresponding `opentelekomcloud_vpc_peering_connection_v2` resource from your configuration. Removing a `opentelekomcloud_vpc_peering_connection_accepter_v2` resource from your configuration will remove it from your statefile and management, but will not destroy the VPC Peering Connection.
+OpenTelekomCloud allows a cross-tenant VPC Peering Connection to be deleted from either the requester's or accepter's side. However, Terraform only allows the VPC Peering Connection to be deleted from the requester's side by removing the corresponding `opentelekomcloud_vpc_peering_connection_v2` resource from your configuration. Removing a `opentelekomcloud_vpc_peering_connection_accepter_v2` resource from your configuration will remove it from your state file and management, but will not destroy the VPC Peering Connection.
 
 ## Attributes Reference
 
