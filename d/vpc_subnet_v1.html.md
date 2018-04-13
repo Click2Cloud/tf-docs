@@ -44,6 +44,10 @@ subnet whose data will be exported as attributes.
 
 * `gateway_ip` (Optional) - The subnet gateway address of specific subnet.
 
+* `primary_dns` (Optional) - The IP address of DNS server 1 on the specific subnet.
+
+* `secondary_dns` (Optional) - The IP address of DNS server 2 on the specific subnet.
+
 * `availability_zone` (Optional) - The availability zone (AZ) to which the subnet should belong.
 
 ## **Attributes Reference**
@@ -53,10 +57,6 @@ result attributes. This data source will complete the data by populating
 any fields that are not included in the configuration with the data for
 the selected subnet.
 
-* `dnsList` - The IP address list of DNS servers on the subnet.
+* `dns_list` - The IP address list of DNS servers on the subnet.
 
 * `dhcp_enable` - DHCP function for the subnet.
- 
-* `primary_dns` - The IP address of DNS server 1 on the subnet.
- 
-* `secondary_dns` - The IP address of DNS server 2 on the subnet.
