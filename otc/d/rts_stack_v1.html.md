@@ -1,37 +1,32 @@
 ---
 layout: "opentelekomcloud"
-page_title: "OpentelekomCloud: opentelekomcloud_rts_stack_v1"
+page_title: "OpenTelekomCloud: opentelekomcloud_rts_stack_v1"
 sidebar_current: "docs-opentelekomcloud-datasource-rts-stack-v1"
 description: |-
-  Get information on an OpentelekomCloud RTS.
+  Provides metadata of an RTS stack (e.g. outputs).
 ---
 
-# opentelekomcloud_rts_stack_v1
+# Data Source: opentelekomcloud_rts_stack_v1
 
-The OpentelekomCloud `Resource Template Service` Stack data source allows access to stack outputs and other useful data including the template body.
+The OpentelekomCloud RTS Stack data source allows access to stack outputs and other useful data including the template body.
 
 ## Example Usage
 
-The following example shows how one might accept a VPC id as a variable and use this data source to obtain the data necessary to create a subnet within it.
 
 ```hcl
-variable "stack_id" { }
 
-data "opentelekomcloud_rts_stack_v1" "stacks" {
-stack_id = "${var.stack_id}"
+data "opentelekomcloud_rts_stack_v1" "mystack" {
+  name = "rts-stack"
 }
 
-output "stack_parameters" {
- 
-  value = "${data.opentelekomcloud_rts_stack_v1.stacks.parameters}"
-}
-output "stack_disable_rollback" {
-  
-  value = "${data.opentelekomcloud_rts_stack_v1.stacks.disable_rollback}"
-}
-output "stack_template_body" {
+resource "opentelekomcloud_compute_instance_v2" "basic" {
+  name            = "basic"
+  image_id        = "ad091b52-742f-469e-8f3c-fd81cadf0743"
+  flavor_id       = "3"
 
-  value = "${data.opentelekomcloud_rts_stack_v1.stacks.template_body}"
+  network {
+    uuid = "${data.opentelekomcloud_rts_stack_v1.mystack.outputs["SubnetId"]}"
+  }
 }
 ```
 
@@ -40,32 +35,23 @@ The following arguments are supported:
 
 * `name` - (Required) The name of the stack.
 
-* `id` - (Required) The id of the stack.
-
 ## Attributes Reference
+In addition to all arguments above, the following attributes are exported:
 
-The following attributes are exported:
+* `id` - A unique identifier of the stack.
 
 * `capabilities` - List of stack capabilities for stack.
 
-* `description` - 	Describes the stack.
+* `notification_topics` - List of notification topics for stack.
 
-* `disable_rollback` - Specifies whether to perform a rollback if the update fails.
+* `status` - Specifies the stack status.
+
+* `disable_rollback` - Whether the rollback of the stack is disabled when stack creation fails.
 
 * `outputs` - A list of stack outputs.
 
-* `parameters` - Specifies the stack parameters.
+* `parameters` - A map of parameters that specify input parameters for the stack.
 
 * `template_body` - Structure containing the template body.
 
 * `timeout_mins` - Specifies the timeout duration.
-
-* `status` - Specifies the stack status.
- 
-* `name` - Specifies the stack name.
- 
-* `status_reason` - Specifies the description of the stack operation.
- 
-* `id` - Specifies the stack UUID.
-
-* `notification_topics` - List of notification topics for stack.
